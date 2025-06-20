@@ -1,0 +1,21 @@
+﻿@model List<MyMVCApp.Models.MovieViewModel>
+
+@{
+    ViewData["Title"] = "All Movies";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@{
+    foreach (var movie in Model)
+    {
+        <hr/>
+        <div>
+            <h4><a asp-controller="Movies" asp-action="MovieDetails" asp-route-title=@movie.Title>@movie.Title</a></h4>
+            <p><strong>@Html.DisplayNameFor(m => m[0].Director):</strong> @movie.Director</p>
+            <p><strong>@Html.DisplayNameFor(m => m[0].Genres):</strong></p>
+            @await Html.PartialAsync("_MyList", movie.Genres)
+            <p><strong>@Html.DisplayNameFor(m => m[0].Description):</strong> @movie.Description</p>
+        </div>
+    }
+}
