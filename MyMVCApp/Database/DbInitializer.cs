@@ -4,7 +4,7 @@ namespace MyMVCApp.Database;
 
 public static class DbInitializer
 {
-    public static void Seed(AppDbContext context)
+    public static void Seed(SqlLiteDbContext context)
     {
         if(context.Movies.Any() || context.Genres.Any() || context.Sessions.Any())
             return;

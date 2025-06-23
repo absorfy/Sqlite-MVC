@@ -8,7 +8,7 @@ namespace MyMVCApp.Repositories;
 
 public class MovieRepository
 {
-    public static MovieViewModel? GetMovieByTitle(AppDbContext context, string title)
+    public static MovieViewModel? GetMovieByTitle(SqlLiteDbContext context, string title)
     {
         var movieEntity = context.Movies
             .Include(m => m.Genres)
@@ -18,7 +18,7 @@ public class MovieRepository
         return movieEntity == null ? null : MovieMapper.ToViewModel(movieEntity);
     }
 
-    public static List<MovieViewModel> GetAllMovies(AppDbContext context)
+    public static List<MovieViewModel> GetAllMovies(SqlLiteDbContext context)
     {
         return context.Movies
             .Include(m => m.Genres)

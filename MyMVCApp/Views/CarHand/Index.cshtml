@@ -1,0 +1,58 @@
+﻿@model IEnumerable<MyMVCApp.Entities.CarEntity>
+
+<div>
+    <h2>All Cars</h2>
+    
+    <a asp-action="Create"> Add </a>
+
+    <form asp-action="Index" method="get" class="mb-3">
+        <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" placeholder="Пошук..." class="form-control d-inline w-25" />
+        <button type="submit" class="btn btn-primary">Пошук</button>
+    </form>
+    
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                @{
+                    var currentSort = ViewData["ModelNameSort"] as string;
+                    var icon = currentSort switch
+                    {
+                        "model_asc" => "▲",
+                        "model_desc" => "▼",
+                        _ => ""
+                    };
+                }
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["ModelNameSort"]"
+                   asp-route-searchString="@ViewData["CurrentFilter"]">
+                    Model Name @icon
+                </a>
+            </th>
+            <th>Manufacturer</th>
+            <th>Year</th>
+            <th>Color</th>
+            <th>Price</th>
+            <th> Actions </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var car in Model)
+        {
+            <tr>
+                <td>@car.ModelName</td>
+                <td>@car.Manufacturer</td>
+                <td>@car.Year</td>
+                <td>@car.Color</td>
+                <td>@car.Price.ToString("C")</td>
+                <td>
+                    <a asp-action="ReadById" asp-route-id="@car.Id">View</a> |
+                    <a asp-action="DeleteById" asp-route-id="@car.Id">Delete</a> |
+                    <a asp-action="Update" asp-route-id="@car.Id">Update</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+        <tfoot></tfoot>
+    </table>
+</div>

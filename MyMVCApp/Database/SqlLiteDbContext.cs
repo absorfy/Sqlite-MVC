@@ -3,13 +3,14 @@ using MyMVCApp.Entities;
 
 namespace MyMVCApp.Database;
 
-public class AppDbContext : DbContext
+public class SqlLiteDbContext : DbContext
 {
     public DbSet<MovieEntity> Movies { get; set; }
     public DbSet<GenreEntity> Genres { get; set; }
     public DbSet<SessionEntity> Sessions { get; set; }
+    public DbSet<CarEntity> Cars { get; set; }
 
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    public SqlLiteDbContext(DbContextOptions<SqlLiteDbContext> options) : base(options)
     {
         
     }

@@ -12,9 +12,9 @@ namespace MyMVCApp.Controllers;
 public class MoviesController : Controller
 {
     private readonly ILogger<MoviesController> _logger;
-    private readonly AppDbContext _dbContext;
+    private readonly SqlLiteDbContext _dbContext;
     
-    public MoviesController(ILogger<MoviesController> logger, AppDbContext dbContext)
+    public MoviesController(ILogger<MoviesController> logger, SqlLiteDbContext dbContext)
     {
         _logger = logger;
         _dbContext = dbContext;
