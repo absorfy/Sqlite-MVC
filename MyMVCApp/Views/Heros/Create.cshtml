@@ -1,0 +1,22 @@
+﻿@model MyMVCApp.Entities.Heros.HeroEntity
+
+<a asp-action="Index">Back</a>
+
+<div>
+    <h2>Creating form model</h2>
+    <form asp-action="Create" method="post">
+        <div>
+            <label asp-for="Name" class="control-label"></label><br/>
+            <input asp-for="Name" class="form-control"/><br/>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Class"></label><br/>
+            <select asp-for="ClassId" class="form-control" asp-items="ViewBag.Classes"></select>
+            <span asp-validation-for="ClassId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
