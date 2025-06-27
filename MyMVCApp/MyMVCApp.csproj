@@ -14,4 +14,13 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.6" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\CarHand\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\CarHand\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\CarHand\ReadById.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\CarHand\Update.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Movies\AllMovies.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Movies\MovieDetails.cshtml" />
+    </ItemGroup>
+
 </Project>
