@@ -1,0 +1,43 @@
+﻿@model IEnumerable<MyMVCApp.Models.HeroViewModel>
+@{
+    var classMap = ViewData["ClassMap"] as Dictionary<int, string>;
+    var skillMap = ViewData["SkillMap"] as Dictionary<int, string>;
+}
+
+<div>
+    <h2>All Heroes</h2>
+
+    <a asp-action="Create">Add</a>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Name)</th>
+            <th>Клас</th>
+            <th>Навички</th>
+            <th>Дії</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var hero in Model)
+        {
+            <tr>
+                <td>@hero.Name</td>
+                <td>@(classMap != null && classMap.ContainsKey(hero.ClassId) ? classMap[hero.ClassId] : "Невідомо")</td>
+                <td>
+                    @if (skillMap != null)
+                    {
+                        @string.Join(", ", hero.SkillIds
+                            .Where(id => skillMap.ContainsKey(id))
+                            .Select(id => skillMap[id]))
+                    }
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@hero.Id">Delete</a> |
+                    <a asp-action="Update" asp-route-id="@hero.Id">Update</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

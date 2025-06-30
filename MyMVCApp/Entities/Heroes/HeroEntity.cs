@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MyMVCApp.Entities.HeroClasses;
+using MyMVCApp.Entities.Skills;
 
-namespace MyMVCApp.Entities.Heros;
+namespace MyMVCApp.Entities.Heroes;
 
 public class HeroEntity
 {
@@ -16,5 +18,8 @@ public class HeroEntity
     public int ClassId { get; set; }
     
     [ForeignKey("ClassId")]
-    public AbstractClassEntity? Class { get; set; }
+    public ClassEntity? Class { get; set; }
+    
+    public ICollection<SkillEntity> Skills { get; set; } = new List<SkillEntity>();
+    
 }
