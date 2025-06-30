@@ -31,6 +31,17 @@ public class SqlLiteDbContext : DbContext
         modelBuilder.Entity<ClassEntity>()
             .HasIndex(c => c.Name)
             .IsUnique();
+        
+        modelBuilder.Entity<HeroEntity>()
+            .HasOne(h => h.Class)
+            .WithMany()
+            .HasForeignKey(h => h.ClassId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<SkillEntity>()
+            .HasMany(s => s.Heroes)
+            .WithMany(h => h.Skills)
+            .UsingEntity(j => j.ToTable("HeroSkills"));
 
         base.OnModelCreating(modelBuilder);
     }
