@@ -10,8 +10,8 @@ using MyMVCApp.Database;
 namespace MyMVCApp.Migrations
 {
     [DbContext(typeof(SqlLiteDbContext))]
-    [Migration("20250630130438_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250630151203_RemoveCascadeDelete")]
+    partial class RemoveCascadeDelete
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,7 @@ namespace MyMVCApp.Migrations
 
                     b.HasIndex("SkillsId");
 
-                    b.ToTable("HeroEntitySkillEntity");
+                    b.ToTable("HeroSkills", (string)null);
                 });
 
             modelBuilder.Entity("MyMVCApp.Entities.HeroClasses.ClassEntity", b =>
@@ -64,6 +64,9 @@ namespace MyMVCApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("ClassEntityId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("ClassId")
                         .HasColumnType("INTEGER");
 
@@ -73,6 +76,8 @@ namespace MyMVCApp.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClassEntityId");
 
                     b.HasIndex("ClassId");
 
@@ -121,10 +126,14 @@ namespace MyMVCApp.Migrations
 
             modelBuilder.Entity("MyMVCApp.Entities.Heroes.HeroEntity", b =>
                 {
-                    b.HasOne("MyMVCApp.Entities.HeroClasses.ClassEntity", "Class")
+                    b.HasOne("MyMVCApp.Entities.HeroClasses.ClassEntity", null)
                         .WithMany("Heroes")
+                        .HasForeignKey("ClassEntityId");
+
+                    b.HasOne("MyMVCApp.Entities.HeroClasses.ClassEntity", "Class")
+                        .WithMany()
                         .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Class");

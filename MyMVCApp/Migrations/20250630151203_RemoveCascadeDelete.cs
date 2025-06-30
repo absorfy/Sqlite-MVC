@@ -5,7 +5,7 @@
 namespace MyMVCApp.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class RemoveCascadeDelete : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -45,21 +45,27 @@ namespace MyMVCApp.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    ClassId = table.Column<int>(type: "INTEGER", nullable: false)
+                    ClassId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ClassEntityId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Heroes", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Heroes_Classes_ClassEntityId",
+                        column: x => x.ClassEntityId,
+                        principalTable: "Classes",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_Heroes_Classes_ClassId",
                         column: x => x.ClassId,
                         principalTable: "Classes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "HeroEntitySkillEntity",
+                name: "HeroSkills",
                 columns: table => new
                 {
                     HeroesId = table.Column<int>(type: "INTEGER", nullable: false),
@@ -67,15 +73,15 @@ namespace MyMVCApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HeroEntitySkillEntity", x => new { x.HeroesId, x.SkillsId });
+                    table.PrimaryKey("PK_HeroSkills", x => new { x.HeroesId, x.SkillsId });
                     table.ForeignKey(
-                        name: "FK_HeroEntitySkillEntity_Heroes_HeroesId",
+                        name: "FK_HeroSkills_Heroes_HeroesId",
                         column: x => x.HeroesId,
                         principalTable: "Heroes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_HeroEntitySkillEntity_Skills_SkillsId",
+                        name: "FK_HeroSkills_Skills_SkillsId",
                         column: x => x.SkillsId,
                         principalTable: "Skills",
                         principalColumn: "Id",
@@ -89,9 +95,9 @@ namespace MyMVCApp.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_HeroEntitySkillEntity_SkillsId",
-                table: "HeroEntitySkillEntity",
-                column: "SkillsId");
+                name: "IX_Heroes_ClassEntityId",
+                table: "Heroes",
+                column: "ClassEntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Heroes_ClassId",
@@ -105,6 +111,11 @@ namespace MyMVCApp.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_HeroSkills_SkillsId",
+                table: "HeroSkills",
+                column: "SkillsId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Skills_Name",
                 table: "Skills",
                 column: "Name",
@@ -115,7 +126,7 @@ namespace MyMVCApp.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "HeroEntitySkillEntity");
+                name: "HeroSkills");
 
             migrationBuilder.DropTable(
                 name: "Heroes");
