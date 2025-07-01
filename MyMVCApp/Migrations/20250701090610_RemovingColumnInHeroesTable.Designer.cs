@@ -10,8 +10,8 @@ using MyMVCApp.Database;
 namespace MyMVCApp.Migrations
 {
     [DbContext(typeof(SqlLiteDbContext))]
-    [Migration("20250630151203_RemoveCascadeDelete")]
-    partial class RemoveCascadeDelete
+    [Migration("20250701090610_RemovingColumnInHeroesTable")]
+    partial class RemovingColumnInHeroesTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,11 +64,11 @@ namespace MyMVCApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ClassEntityId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("ClassId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -76,8 +76,6 @@ namespace MyMVCApp.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ClassEntityId");
 
                     b.HasIndex("ClassId");
 
@@ -126,12 +124,8 @@ namespace MyMVCApp.Migrations
 
             modelBuilder.Entity("MyMVCApp.Entities.Heroes.HeroEntity", b =>
                 {
-                    b.HasOne("MyMVCApp.Entities.HeroClasses.ClassEntity", null)
-                        .WithMany("Heroes")
-                        .HasForeignKey("ClassEntityId");
-
                     b.HasOne("MyMVCApp.Entities.HeroClasses.ClassEntity", "Class")
-                        .WithMany()
+                        .WithMany("Heroes")
                         .HasForeignKey("ClassId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

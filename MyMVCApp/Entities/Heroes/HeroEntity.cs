@@ -17,8 +17,9 @@ public class HeroEntity
     [Required]
     public int ClassId { get; set; }
     
-    [ForeignKey("ClassId")]
-    public ClassEntity? Class { get; set; }
+    public string? ImageUrl { get; set; }
+
+    [ForeignKey(nameof(ClassId))] public ClassEntity Class { get; set; } = null!;
     
     public ICollection<SkillEntity> Skills { get; set; } = new List<SkillEntity>();
     

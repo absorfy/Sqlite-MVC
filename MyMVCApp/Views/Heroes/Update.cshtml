@@ -3,7 +3,7 @@
 <a asp-action="Index"> Back </a>
 <div>
     <h2>Updating form model</h2>
-    <form asp-action="Update" method="post">
+    <form asp-action="Update" method="post" enctype="multipart/form-data">
         <div>
             <label asp-for="Name" class="control-label"></label><br/>
             <input asp-for="Name" class="form-control"/><br/>
@@ -19,6 +19,12 @@
             <select multiple asp-for="SkillIds" class="form-control" asp-items="ViewBag.SelectSkills"></select>
             <span asp-validation-for="SkillIds" class="text-danger"></span>
         </div>
+        <div>
+            @await Html.PartialAsync("_HeroAvatar", Model)
+            <label asp-for="HeroImageFile"></label><br/>
+            <input type="file" asp-for="HeroImageFile" class="form-control"/>
+        </div>
+        <input type="hidden" asp-for="ImageUrl" />
         <div class="form-group">
             <a asp-action="Update" asp-route-id="@Model.Id">Reset</a>
             <input type="submit" value="Update" class="btn btn-primary"/>

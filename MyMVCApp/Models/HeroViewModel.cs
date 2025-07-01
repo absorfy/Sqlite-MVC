@@ -14,6 +14,9 @@ public class HeroViewModel
     [Required(ErrorMessage = "Клас обов'язковий")]
     [Display(Name = "Клас", Description = "Оберіть клас героя")]
     public int ClassId { get; set; }
+    public string? ImageUrl { get; set; }
+    [Display(Name = "Зображення", Description = "Завантажте зображення героя")]
+    public IFormFile? HeroImageFile { get; set; }
     
     [Display(Name="Навички", Description = "Оберіть навички героя")]
     public ICollection<int> SkillIds { get; set; } = new List<int>();

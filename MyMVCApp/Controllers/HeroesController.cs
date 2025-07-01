@@ -59,6 +59,7 @@ public class HeroesController : Controller
     {
         if (ModelState.IsValid)
         {
+            await TrySaveHeroImage(model);
             _dbContext.Heroes.Add(HeroMapper.ToEntity(model, await _dbContext.Skills.ToListAsync()));
             await _dbContext.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -67,6 +68,18 @@ public class HeroesController : Controller
         PutSelectClassesToViewBag();
         PutSelectSkillsToViewBag();
         return View(model);
+    }
+
+    private async Task TrySaveHeroImage(HeroViewModel model)
+    {
+        if (model.HeroImageFile != null)
+        {
+            var fileName = Guid.NewGuid() + "_" + model.HeroImageFile.FileName;
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "heroes", fileName);
+            await using var stream = new FileStream(filePath, FileMode.Create);
+            await model.HeroImageFile.CopyToAsync(stream);
+            model.ImageUrl = "/images/heroes/" + fileName;
+        }
     }
 
     public IActionResult Delete(int id)
@@ -95,14 +108,16 @@ public class HeroesController : Controller
         return View(HeroMapper.ToViewModel(hero));
     }
 
-    public IActionResult Update(HeroViewModel model)
+    public async Task<IActionResult> Update(HeroViewModel model)
     {
         if (ModelState.IsValid)
         {
+            Console.WriteLine("Old image URL: " + model.ImageUrl);
             try
             {
+                await TrySaveHeroImage(model);
                 _dbContext.Update(HeroMapper.ToEntity(model));
-                _dbContext.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {

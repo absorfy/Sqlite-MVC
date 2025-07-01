@@ -13,8 +13,9 @@
         <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model.Name)</th>
-            <th>Клас</th>
-            <th>Навички</th>
+            <th>@Html.DisplayNameFor(model => model.ImageUrl)</th>
+            <th>@Html.DisplayNameFor(model => model.ClassId)</th>
+            <th>@Html.DisplayNameFor(model => model.SkillIds)</th>
             <th>Дії</th>
         </tr>
         </thead>
@@ -22,7 +23,10 @@
         @foreach (var hero in Model)
         {
             <tr>
-                <td>@hero.Name</td>
+                <td>@Html.DisplayFor(modelItem => hero.Name)</td>
+                <td>
+                    @await Html.PartialAsync("_HeroAvatar", hero)
+                </td>
                 <td>@(classMap != null && classMap.ContainsKey(hero.ClassId) ? classMap[hero.ClassId] : "Невідомо")</td>
                 <td>
                     @if (skillMap != null)

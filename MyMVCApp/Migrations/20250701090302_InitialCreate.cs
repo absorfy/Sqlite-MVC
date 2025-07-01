@@ -5,7 +5,7 @@
 namespace MyMVCApp.Migrations
 {
     /// <inheritdoc />
-    public partial class RemoveCascadeDelete : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -46,6 +46,7 @@ namespace MyMVCApp.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     ClassId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ImageUrl = table.Column<string>(type: "TEXT", nullable: true),
                     ClassEntityId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>

@@ -13,6 +13,7 @@ public class HeroMapper
             Id = model.Id,
             Name = model.Name,
             ClassId = model.ClassId,
+            ImageUrl = model.ImageUrl,
             Skills = allSkills
                 ?.Where(skill => model.SkillIds.Contains(skill.Id))
                 .ToList() ?? []
@@ -26,6 +27,7 @@ public class HeroMapper
             Id = entity.Id,
             Name = entity.Name,
             ClassId = entity.ClassId,
+            ImageUrl = entity.ImageUrl,
             SkillIds = entity.Skills?.Select(skill => skill.Id).ToList() ?? []
         };
     }

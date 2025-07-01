@@ -34,7 +34,7 @@ public class SqlLiteDbContext : DbContext
         
         modelBuilder.Entity<HeroEntity>()
             .HasOne(h => h.Class)
-            .WithMany()
+            .WithMany(c => c.Heroes)
             .HasForeignKey(h => h.ClassId)
             .OnDelete(DeleteBehavior.Restrict);
         
